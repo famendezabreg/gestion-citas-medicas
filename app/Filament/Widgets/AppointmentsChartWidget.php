@@ -8,12 +8,13 @@ use Illuminate\Support\Carbon;
 
 class AppointmentsChartWidget extends ChartWidget
 {
-    protected static ?string $heading = 'Citas por día (últimos 7 días)';
+    protected ?string $heading = 'Citas por dia (ultimos 7 dias)';
+
     protected static ?int $sort = 2;
 
     protected function getData(): array
     {
-        $days   = collect();
+        $days = collect();
         $counts = collect();
 
         for ($i = 6; $i >= 0; $i--) {
@@ -29,10 +30,10 @@ class AppointmentsChartWidget extends ChartWidget
         return [
             'datasets' => [
                 [
-                    'label'           => 'Citas',
-                    'data'            => $counts->toArray(),
+                    'label' => 'Citas',
+                    'data' => $counts->toArray(),
                     'backgroundColor' => '#6366f1',
-                    'borderColor'     => '#4f46e5',
+                    'borderColor' => '#4f46e5',
                 ],
             ],
             'labels' => $days->toArray(),
