@@ -46,7 +46,11 @@ class DoctorAvailabilityCalendarWidget extends Widget
 
         $rawSchedules = Schedule::with('doctor.user')
             ->whereHas('doctor', fn ($query) => $query->where('active', true))
-            ->get();
+            ->get()
+            ->sortBy([
+                ['day_of_week', 'asc'],
+                ['start_time', 'asc'],
+            ]);
 
         $schedulesByDay = [];
 
@@ -81,6 +85,9 @@ class DoctorAvailabilityCalendarWidget extends Widget
             'monthName' => $months[$this->month] . ' ' . $this->year,
             'today' => now()->day,
             'isCurrentMonth' => $this->month === now()->month && $this->year === now()->year,
+            'activeDoctorsCount' => $rawSchedules->pluck('doctor_id')->unique()->count(),
+            'scheduleBlocksCount' => $rawSchedules->count(),
+            'coveredDaysCount' => collect($schedulesByDay)->filter(fn ($items) => filled($items))->count(),
         ];
     }
 }

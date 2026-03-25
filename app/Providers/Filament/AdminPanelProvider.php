@@ -2,6 +2,7 @@
 
 namespace App\Providers\Filament;
 
+use App\Filament\Pages\Dashboard;
 use App\Filament\Resources\Appointments\AppointmentResource;
 use App\Filament\Resources\Patients\PatientResource;
 use App\Filament\Resources\Users\UserResource;
@@ -32,6 +33,9 @@ class AdminPanelProvider extends PanelProvider
             ->path('admin')
             ->login()
             ->colors(['primary' => Color::Blue])
+            ->pages([
+                Dashboard::class,
+            ])
             ->resources([
                 PatientResource::class,
                 AppointmentResource::class,
