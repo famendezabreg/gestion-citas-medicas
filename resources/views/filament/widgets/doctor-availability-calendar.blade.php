@@ -1,482 +1,300 @@
 <x-filament-widgets::widget>
-    <style>
-        .med-cal {
-            display: flex;
-            flex-direction: column;
-            gap: 1.25rem;
-            color: #0f172a;
-        }
-
-        .dark .med-cal {
-            color: #e5e7eb;
-        }
-
-        .med-cal__hero {
-            border: 1px solid #c7d2fe;
-            border-radius: 28px;
-            padding: 1.5rem;
-            background:
-                radial-gradient(circle at top right, rgba(59, 130, 246, 0.18), transparent 28%),
-                linear-gradient(135deg, #eef2ff 0%, #dbeafe 55%, #f8fafc 100%);
-            box-shadow: 0 24px 60px -40px rgba(15, 23, 42, 0.5);
-        }
-
-        .dark .med-cal__hero {
-            border-color: rgba(148, 163, 184, 0.25);
-            background:
-                radial-gradient(circle at top right, rgba(96, 165, 250, 0.16), transparent 30%),
-                linear-gradient(135deg, rgba(15, 23, 42, 0.98) 0%, rgba(30, 41, 59, 0.98) 55%, rgba(17, 24, 39, 0.98) 100%);
-            box-shadow: none;
-        }
-
-        .med-cal__hero-top {
-            display: flex;
-            gap: 1rem;
-            justify-content: space-between;
-            align-items: flex-start;
-            flex-wrap: wrap;
-        }
-
-        .med-cal__eyebrow {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            padding: 0.35rem 0.8rem;
-            margin-bottom: 0.9rem;
-            border-radius: 999px;
-            background: rgba(37, 99, 235, 0.12);
-            color: #1d4ed8;
-            font-size: 0.76rem;
-            font-weight: 700;
-            letter-spacing: 0.08em;
-            text-transform: uppercase;
-        }
-
-        .dark .med-cal__eyebrow {
-            background: rgba(96, 165, 250, 0.14);
-            color: #bfdbfe;
-        }
-
-        .med-cal__title {
-            margin: 0;
-            font-size: 1.7rem;
-            line-height: 1.1;
-            font-weight: 800;
-            color: #0f172a;
-        }
-
-        .dark .med-cal__title {
-            color: #f8fafc;
-        }
-
-        .med-cal__description {
-            margin: 0.65rem 0 0;
-            max-width: 52rem;
-            font-size: 0.98rem;
-            line-height: 1.7;
-            color: #475569;
-        }
-
-        .dark .med-cal__description {
-            color: #cbd5e1;
-        }
-
-        .med-cal__controls {
-            display: flex;
-            align-items: center;
-            gap: 0.75rem;
-            flex-wrap: wrap;
-        }
-
-        .med-cal__month {
-            min-width: 12rem;
-            padding: 0.85rem 1rem;
-            border-radius: 18px;
-            border: 1px solid rgba(59, 130, 246, 0.2);
-            background: rgba(255, 255, 255, 0.72);
-            color: #1e3a8a;
-            font-size: 0.95rem;
-            font-weight: 700;
-            text-align: center;
-            backdrop-filter: blur(10px);
-        }
-
-        .dark .med-cal__month {
-            border-color: rgba(96, 165, 250, 0.18);
-            background: rgba(15, 23, 42, 0.6);
-            color: #dbeafe;
-        }
-
-        .med-cal__stats {
-            display: grid;
-            grid-template-columns: repeat(3, minmax(0, 1fr));
-            gap: 0.9rem;
-            margin-top: 1.25rem;
-        }
-
-        .med-cal__stat {
-            border-radius: 22px;
-            padding: 1rem 1.1rem;
-            border: 1px solid rgba(148, 163, 184, 0.18);
-            background: rgba(255, 255, 255, 0.7);
-            backdrop-filter: blur(8px);
-        }
-
-        .dark .med-cal__stat {
-            border-color: rgba(148, 163, 184, 0.18);
-            background: rgba(15, 23, 42, 0.58);
-        }
-
-        .med-cal__stat-label {
-            margin: 0;
-            font-size: 0.72rem;
-            font-weight: 700;
-            letter-spacing: 0.08em;
-            text-transform: uppercase;
-            color: #64748b;
-        }
-
-        .dark .med-cal__stat-label {
-            color: #94a3b8;
-        }
-
-        .med-cal__stat-value {
-            margin: 0.45rem 0 0;
-            font-size: 1.9rem;
-            line-height: 1;
-            font-weight: 800;
-            color: #0f172a;
-        }
-
-        .dark .med-cal__stat-value {
-            color: #f8fafc;
-        }
-
-        .med-cal__stat-copy {
-            margin: 0.45rem 0 0;
-            font-size: 0.86rem;
-            line-height: 1.5;
-            color: #475569;
-        }
-
-        .dark .med-cal__stat-copy {
-            color: #cbd5e1;
-        }
-
-        .med-cal__board {
-            border-radius: 28px;
-            border: 1px solid rgba(148, 163, 184, 0.18);
-            background: rgba(255, 255, 255, 0.88);
-            padding: 1rem;
-            box-shadow: 0 24px 60px -42px rgba(15, 23, 42, 0.55);
-            overflow-x: auto;
-        }
-
-        .dark .med-cal__board {
-            border-color: rgba(148, 163, 184, 0.16);
-            background: rgba(15, 23, 42, 0.86);
-            box-shadow: none;
-        }
-
-        .med-cal__weekdays,
-        .med-cal__grid {
-            min-width: 980px;
-        }
-
-        .med-cal__weekdays {
-            display: grid;
-            grid-template-columns: repeat(7, minmax(0, 1fr));
-            gap: 0.75rem;
-            margin-bottom: 0.75rem;
-        }
-
-        .med-cal__weekday {
-            padding: 0.85rem 0.5rem;
-            border-radius: 18px;
-            background: #e2e8f0;
-            color: #334155;
-            text-align: center;
-            font-size: 0.74rem;
-            font-weight: 700;
-            letter-spacing: 0.08em;
-            text-transform: uppercase;
-        }
-
-        .dark .med-cal__weekday {
-            background: rgba(30, 41, 59, 0.95);
-            color: #cbd5e1;
-        }
-
-        .med-cal__grid {
-            display: grid;
-            grid-template-columns: repeat(7, minmax(0, 1fr));
-            gap: 0.75rem;
-        }
-
-        .med-cal__empty,
-        .med-cal__cell {
-            min-height: 13rem;
-            border-radius: 22px;
-        }
-
-        .med-cal__empty {
-            border: 1px dashed rgba(148, 163, 184, 0.3);
-            background: rgba(226, 232, 240, 0.45);
-        }
-
-        .dark .med-cal__empty {
-            border-color: rgba(148, 163, 184, 0.18);
-            background: rgba(30, 41, 59, 0.45);
-        }
-
-        .med-cal__cell {
-            display: flex;
-            flex-direction: column;
-            gap: 0.9rem;
-            padding: 0.95rem;
-            border: 1px solid rgba(148, 163, 184, 0.2);
-            background: linear-gradient(180deg, rgba(255, 255, 255, 0.95) 0%, rgba(248, 250, 252, 0.98) 100%);
-        }
-
-        .dark .med-cal__cell {
-            border-color: rgba(148, 163, 184, 0.18);
-            background: linear-gradient(180deg, rgba(15, 23, 42, 0.95) 0%, rgba(17, 24, 39, 0.95) 100%);
-        }
-
-        .med-cal__cell--today {
-            border-color: rgba(37, 99, 235, 0.42);
-            background: linear-gradient(180deg, rgba(219, 234, 254, 0.95) 0%, rgba(239, 246, 255, 0.98) 100%);
-            box-shadow: inset 0 0 0 1px rgba(37, 99, 235, 0.12);
-        }
-
-        .dark .med-cal__cell--today {
-            background: linear-gradient(180deg, rgba(30, 41, 59, 0.98) 0%, rgba(30, 64, 175, 0.16) 100%);
-            border-color: rgba(96, 165, 250, 0.4);
-        }
-
-        .med-cal__cell-head {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-            gap: 0.5rem;
-        }
-
-        .med-cal__day-number {
-            margin: 0;
-            font-size: 1.1rem;
-            font-weight: 800;
-            color: #0f172a;
-        }
-
-        .dark .med-cal__day-number {
-            color: #f8fafc;
-        }
-
-        .med-cal__day-label {
-            margin: 0.18rem 0 0;
-            font-size: 0.7rem;
-            letter-spacing: 0.08em;
-            text-transform: uppercase;
-            color: #64748b;
-        }
-
-        .dark .med-cal__day-label {
-            color: #94a3b8;
-        }
-
-        .med-cal__count {
-            padding: 0.35rem 0.55rem;
-            border-radius: 999px;
-            background: rgba(37, 99, 235, 0.12);
-            color: #1d4ed8;
-            font-size: 0.7rem;
-            font-weight: 700;
-            white-space: nowrap;
-        }
-
-        .dark .med-cal__count {
-            background: rgba(96, 165, 250, 0.14);
-            color: #bfdbfe;
-        }
-
-        .med-cal__doctor-list {
-            display: flex;
-            flex-direction: column;
-            gap: 0.55rem;
-        }
-
-        .med-cal__doctor {
-            border-radius: 16px;
-            padding: 0.7rem 0.8rem;
-            background: rgba(37, 99, 235, 0.08);
-            border: 1px solid rgba(37, 99, 235, 0.09);
-        }
-
-        .dark .med-cal__doctor {
-            background: rgba(30, 64, 175, 0.18);
-            border-color: rgba(96, 165, 250, 0.18);
-        }
-
-        .med-cal__doctor-name {
-            margin: 0;
-            font-size: 0.83rem;
-            font-weight: 700;
-            color: #0f172a;
-        }
-
-        .dark .med-cal__doctor-name {
-            color: #eff6ff;
-        }
-
-        .med-cal__doctor-time {
-            margin: 0.25rem 0 0;
-            font-size: 0.75rem;
-            color: #334155;
-        }
-
-        .dark .med-cal__doctor-time {
-            color: #bfdbfe;
-        }
-
-        .med-cal__more {
-            margin-top: 0.15rem;
-            font-size: 0.73rem;
-            font-weight: 700;
-            color: #475569;
-        }
-
-        .dark .med-cal__more {
-            color: #cbd5e1;
-        }
-
-        .med-cal__empty-copy {
-            margin-top: auto;
-            padding: 0.9rem 0.8rem;
-            border-radius: 16px;
-            border: 1px dashed rgba(148, 163, 184, 0.28);
-            text-align: center;
-            font-size: 0.8rem;
-            color: #64748b;
-            background: rgba(248, 250, 252, 0.9);
-        }
-
-        .dark .med-cal__empty-copy {
-            border-color: rgba(148, 163, 184, 0.18);
-            color: #94a3b8;
-            background: rgba(15, 23, 42, 0.45);
-        }
-
-        .med-cal__legend {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 1rem;
-            align-items: center;
-            font-size: 0.78rem;
-            color: #475569;
-        }
-
-        .dark .med-cal__legend {
-            color: #cbd5e1;
-        }
-
-        .med-cal__legend-item {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.55rem;
-        }
-
-        .med-cal__legend-dot {
-            width: 0.8rem;
-            height: 0.8rem;
-            border-radius: 999px;
-        }
-
-        .med-cal__legend-dot--doctor {
-            background: #60a5fa;
-        }
-
-        .med-cal__legend-dot--today {
-            background: #2563eb;
-        }
-
-        @media (max-width: 1024px) {
-            .med-cal__stats {
-                grid-template-columns: 1fr;
-            }
-
-            .med-cal__month {
-                min-width: 100%;
-            }
-        }
-    </style>
-
     <x-filament::section>
-        <div class="med-cal">
-            <div class="med-cal__hero">
-                <div class="med-cal__hero-top">
-                    <div>
-                        <div class="med-cal__eyebrow">Punto extra | Vista calendario</div>
-                        <h2 class="med-cal__title">Disponibilidad mensual de medicos</h2>
-                        <p class="med-cal__description">
-                            Implementacion de un calendario mensual en el panel de Filament para visualizar la disponibilidad de los medicos de forma intuitiva.
-                        </p>
-                    </div>
+        <style>
+            .cal-header {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                flex-wrap: wrap;
+                gap: 1rem;
+                margin-bottom: 1.5rem;
+            }
+            .cal-header__title {
+                font-size: 1.2rem;
+                font-weight: 700;
+                color: var(--gray-950, #0f172a);
+            }
+            .dark .cal-header__title { color: #f1f5f9; }
+            .cal-header__sub {
+                font-size: 0.82rem;
+                color: #64748b;
+                margin-top: 0.2rem;
+            }
+            .dark .cal-header__sub { color: #94a3b8; }
 
-                    <div class="med-cal__controls">
-                        <x-filament::button
-                            wire:click="previousMonth"
-                            color="gray"
-                            size="sm"
-                            icon="heroicon-m-chevron-left"
-                        >
-                            Mes anterior
-                        </x-filament::button>
+            .cal-stats {
+                display: grid;
+                grid-template-columns: repeat(3, minmax(0, 1fr));
+                gap: 0.75rem;
+                margin-bottom: 1.5rem;
+            }
+            .cal-stat {
+                padding: 0.9rem 1rem;
+                border-radius: 12px;
+                border: 1px solid rgba(148,163,184,0.2);
+                background: rgba(248,250,252,0.8);
+            }
+            .dark .cal-stat {
+                background: rgba(30,41,59,0.5);
+                border-color: rgba(148,163,184,0.15);
+            }
+            .cal-stat__label {
+                font-size: 0.7rem;
+                font-weight: 700;
+                text-transform: uppercase;
+                letter-spacing: 0.07em;
+                color: #64748b;
+            }
+            .dark .cal-stat__label { color: #94a3b8; }
+            .cal-stat__value {
+                font-size: 1.6rem;
+                font-weight: 800;
+                color: #0f172a;
+                line-height: 1.2;
+                margin-top: 0.3rem;
+            }
+            .dark .cal-stat__value { color: #f1f5f9; }
+            .cal-stat__desc {
+                font-size: 0.78rem;
+                color: #64748b;
+                margin-top: 0.2rem;
+            }
+            .dark .cal-stat__desc { color: #94a3b8; }
 
-                        <div class="med-cal__month">{{ $monthName }}</div>
+            .cal-controls {
+                display: flex;
+                align-items: center;
+                gap: 0.75rem;
+            }
+            .cal-month-label {
+                min-width: 10rem;
+                text-align: center;
+                font-size: 0.95rem;
+                font-weight: 700;
+                color: #0f172a;
+                padding: 0.6rem 1rem;
+                border-radius: 10px;
+                border: 1px solid rgba(148,163,184,0.25);
+                background: rgba(248,250,252,0.9);
+            }
+            .dark .cal-month-label {
+                color: #f1f5f9;
+                background: rgba(30,41,59,0.6);
+                border-color: rgba(148,163,184,0.2);
+            }
 
-                        <x-filament::button
-                            wire:click="nextMonth"
-                            color="gray"
-                            size="sm"
-                            icon="heroicon-m-chevron-right"
-                            icon-position="after"
-                        >
-                            Mes siguiente
-                        </x-filament::button>
-                    </div>
+            .cal-grid-wrap { overflow-x: auto; }
+
+            .cal-weekdays,
+            .cal-grid {
+                min-width: 700px;
+            }
+            .cal-weekdays {
+                display: grid;
+                grid-template-columns: repeat(7, minmax(0, 1fr));
+                gap: 0.5rem;
+                margin-bottom: 0.5rem;
+            }
+            .cal-weekday {
+                padding: 0.6rem 0.4rem;
+                border-radius: 8px;
+                background: rgba(241,245,249,0.9);
+                text-align: center;
+                font-size: 0.72rem;
+                font-weight: 700;
+                letter-spacing: 0.07em;
+                text-transform: uppercase;
+                color: #475569;
+            }
+            .dark .cal-weekday {
+                background: rgba(30,41,59,0.7);
+                color: #94a3b8;
+            }
+
+            .cal-grid {
+                display: grid;
+                grid-template-columns: repeat(7, minmax(0, 1fr));
+                gap: 0.5rem;
+            }
+
+            .cal-empty {
+                min-height: 7rem;
+                border-radius: 10px;
+                border: 1px dashed rgba(148,163,184,0.2);
+                background: rgba(241,245,249,0.3);
+            }
+            .dark .cal-empty {
+                border-color: rgba(148,163,184,0.12);
+                background: rgba(15,23,42,0.3);
+            }
+
+            .cal-cell {
+                min-height: 7rem;
+                border-radius: 10px;
+                border: 1px solid rgba(148,163,184,0.2);
+                background: rgba(255,255,255,0.9);
+                padding: 0.6rem;
+                display: flex;
+                flex-direction: column;
+                gap: 0.4rem;
+            }
+            .dark .cal-cell {
+                background: rgba(15,23,42,0.6);
+                border-color: rgba(148,163,184,0.15);
+            }
+            .cal-cell--today {
+                border-color: rgba(59,130,246,0.5);
+                background: rgba(239,246,255,0.95);
+            }
+            .dark .cal-cell--today {
+                background: rgba(30,58,138,0.2);
+                border-color: rgba(96,165,250,0.4);
+            }
+
+            .cal-cell__head {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+            }
+            .cal-cell__day {
+                font-size: 0.95rem;
+                font-weight: 800;
+                color: #0f172a;
+            }
+            .dark .cal-cell__day { color: #f1f5f9; }
+            .cal-cell__day--today { color: #2563eb; }
+            .dark .cal-cell__day--today { color: #60a5fa; }
+
+            .cal-cell__badge {
+                font-size: 0.65rem;
+                font-weight: 700;
+                padding: 0.2rem 0.45rem;
+                border-radius: 999px;
+                background: rgba(59,130,246,0.12);
+                color: #2563eb;
+            }
+            .dark .cal-cell__badge {
+                background: rgba(96,165,250,0.15);
+                color: #93c5fd;
+            }
+
+            .cal-doctor {
+                font-size: 0.72rem;
+                padding: 0.35rem 0.5rem;
+                border-radius: 7px;
+                background: rgba(59,130,246,0.08);
+                border: 1px solid rgba(59,130,246,0.12);
+                color: #1e40af;
+                line-height: 1.3;
+            }
+            .dark .cal-doctor {
+                background: rgba(30,64,175,0.2);
+                border-color: rgba(96,165,250,0.2);
+                color: #bfdbfe;
+            }
+            .cal-doctor__name {
+                font-weight: 700;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+            }
+            .cal-doctor__time {
+                font-size: 0.68rem;
+                opacity: 0.8;
+            }
+
+            .cal-more {
+                font-size: 0.68rem;
+                font-weight: 600;
+                color: #64748b;
+                padding: 0.2rem 0.4rem;
+            }
+            .dark .cal-more { color: #94a3b8; }
+
+            .cal-no-doctors {
+                flex: 1;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-size: 0.72rem;
+                color: #94a3b8;
+            }
+
+            .cal-legend {
+                display: flex;
+                gap: 1.2rem;
+                flex-wrap: wrap;
+                margin-top: 1rem;
+                font-size: 0.78rem;
+                color: #64748b;
+            }
+            .dark .cal-legend { color: #94a3b8; }
+            .cal-legend__item {
+                display: flex;
+                align-items: center;
+                gap: 0.45rem;
+            }
+            .cal-legend__dot {
+                width: 0.7rem;
+                height: 0.7rem;
+                border-radius: 999px;
+            }
+
+            @media (max-width: 768px) {
+                .cal-stats { grid-template-columns: 1fr; }
+                .cal-controls { flex-wrap: wrap; }
+                .cal-month-label { min-width: 100%; text-align: center; }
+            }
+        </style>
+
+        <div>
+            {{-- Header --}}
+            <div class="cal-header">
+                <div>
+                    <div class="cal-header__title">📅 Disponibilidad mensual de médicos</div>
+                    <div class="cal-header__sub">Visualiza qué médicos atienden cada día del mes</div>
                 </div>
-
-                <div class="med-cal__stats">
-                    <div class="med-cal__stat">
-                        <p class="med-cal__stat-label">Medicos activos</p>
-                        <p class="med-cal__stat-value">{{ $activeDoctorsCount }}</p>
-                        <p class="med-cal__stat-copy">Con horarios visibles en el calendario.</p>
-                    </div>
-
-                    <div class="med-cal__stat">
-                        <p class="med-cal__stat-label">Bloques registrados</p>
-                        <p class="med-cal__stat-value">{{ $scheduleBlocksCount }}</p>
-                        <p class="med-cal__stat-copy">Segmentos de horario cargados para los medicos.</p>
-                    </div>
-
-                    <div class="med-cal__stat">
-                        <p class="med-cal__stat-label">Dias con cobertura</p>
-                        <p class="med-cal__stat-value">{{ $coveredDaysCount }}</p>
-                        <p class="med-cal__stat-copy">Dias de la semana que tienen atencion programada.</p>
-                    </div>
+                <div class="cal-controls">
+                    <x-filament::button wire:click="previousMonth" color="gray" size="sm" icon="heroicon-m-chevron-left">
+                        Anterior
+                    </x-filament::button>
+                    <div class="cal-month-label">{{ $monthName }}</div>
+                    <x-filament::button wire:click="nextMonth" color="gray" size="sm" icon="heroicon-m-chevron-right" icon-position="after">
+                        Siguiente
+                    </x-filament::button>
                 </div>
             </div>
 
-            <div class="med-cal__board">
-                <div class="med-cal__weekdays">
-                    @foreach (['Lun', 'Mar', 'Mie', 'Jue', 'Vie', 'Sab', 'Dom'] as $dayName)
-                        <div class="med-cal__weekday">{{ $dayName }}</div>
+            {{-- Stats --}}
+            <div class="cal-stats">
+                <div class="cal-stat">
+                    <div class="cal-stat__label">Médicos activos</div>
+                    <div class="cal-stat__value">{{ $activeDoctorsCount }}</div>
+                    <div class="cal-stat__desc">Con horarios registrados</div>
+                </div>
+                <div class="cal-stat">
+                    <div class="cal-stat__label">Bloques de horario</div>
+                    <div class="cal-stat__value">{{ $scheduleBlocksCount }}</div>
+                    <div class="cal-stat__desc">Segmentos de atención cargados</div>
+                </div>
+                <div class="cal-stat">
+                    <div class="cal-stat__label">Días con cobertura</div>
+                    <div class="cal-stat__value">{{ $coveredDaysCount }}</div>
+                    <div class="cal-stat__desc">De 7 días de la semana</div>
+                </div>
+            </div>
+
+            {{-- Calendario --}}
+            <div class="cal-grid-wrap">
+                <div class="cal-weekdays">
+                    @foreach (['Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb', 'Dom'] as $dayName)
+                        <div class="cal-weekday">{{ $dayName }}</div>
                     @endforeach
                 </div>
 
-                <div class="med-cal__grid">
+                <div class="cal-grid">
                     @for ($i = 0; $i < $startOffset; $i++)
-                        <div class="med-cal__empty"></div>
+                        <div class="cal-empty"></div>
                     @endfor
 
                     @for ($day = 1; $day <= $daysInMonth; $day++)
@@ -486,35 +304,30 @@
                             $schedDay = $isoDay === 7 ? 0 : $isoDay;
                             $doctors = $schedulesByDay[$schedDay] ?? [];
                             $isToday = $isCurrentMonth && $day === $today;
+                            $visible = array_slice($doctors, 0, 2);
+                            $extra = count($doctors) - count($visible);
                         @endphp
 
-                        <div class="med-cal__cell {{ $isToday ? 'med-cal__cell--today' : '' }}">
-                            <div class="med-cal__cell-head">
-                                <div>
-                                    <p class="med-cal__day-number">{{ $day }}</p>
-                                    <p class="med-cal__day-label">{{ $date->translatedFormat('M') }}</p>
-                                </div>
-
+                        <div class="cal-cell {{ $isToday ? 'cal-cell--today' : '' }}">
+                            <div class="cal-cell__head">
+                                <span class="cal-cell__day {{ $isToday ? 'cal-cell__day--today' : '' }}">{{ $day }}</span>
                                 @if (count($doctors))
-                                    <span class="med-cal__count">{{ count($doctors) }} medico(s)</span>
+                                    <span class="cal-cell__badge">{{ count($doctors) }} drs.</span>
                                 @endif
                             </div>
 
                             @if (count($doctors))
-                                <div class="med-cal__doctor-list">
-                                    @foreach (array_slice($doctors, 0, 3) as $doctor)
-                                        <div class="med-cal__doctor">
-                                            <p class="med-cal__doctor-name">{{ $doctor['name'] }}</p>
-                                            <p class="med-cal__doctor-time">{{ $doctor['start'] }} - {{ $doctor['end'] }}</p>
-                                        </div>
-                                    @endforeach
-
-                                    @if (count($doctors) > 3)
-                                        <div class="med-cal__more">+{{ count($doctors) - 3 }} medico(s) mas</div>
-                                    @endif
-                                </div>
+                                @foreach ($visible as $doctor)
+                                    <div class="cal-doctor">
+                                        <div class="cal-doctor__name">{{ $doctor['name'] }}</div>
+                                        <div class="cal-doctor__time">{{ $doctor['start'] }} – {{ $doctor['end'] }}</div>
+                                    </div>
+                                @endforeach
+                                @if ($extra > 0)
+                                    <div class="cal-more">+{{ $extra }} más</div>
+                                @endif
                             @else
-                                <div class="med-cal__empty-copy">Sin disponibilidad</div>
+                                <div class="cal-no-doctors">Sin atención</div>
                             @endif
                         </div>
                     @endfor
@@ -524,22 +337,25 @@
                         $lastIso = $lastDate->isoWeekday();
                         $endPadding = $lastIso === 7 ? 0 : 7 - $lastIso;
                     @endphp
-
                     @for ($i = 0; $i < $endPadding; $i++)
-                        <div class="med-cal__empty"></div>
+                        <div class="cal-empty"></div>
                     @endfor
                 </div>
             </div>
 
-            <div class="med-cal__legend">
-                <div class="med-cal__legend-item">
-                    <span class="med-cal__legend-dot med-cal__legend-dot--doctor"></span>
-                    <span>Horario medico disponible</span>
+            {{-- Leyenda --}}
+            <div class="cal-legend">
+                <div class="cal-legend__item">
+                    <span class="cal-legend__dot" style="background:#60a5fa"></span>
+                    <span>Médico disponible</span>
                 </div>
-
-                <div class="med-cal__legend-item">
-                    <span class="med-cal__legend-dot med-cal__legend-dot--today"></span>
-                    <span>Dia actual</span>
+                <div class="cal-legend__item">
+                    <span class="cal-legend__dot" style="background:#2563eb"></span>
+                    <span>Día actual</span>
+                </div>
+                <div class="cal-legend__item">
+                    <span class="cal-legend__dot" style="background:rgba(148,163,184,0.4)"></span>
+                    <span>Sin atención programada</span>
                 </div>
             </div>
         </div>
